@@ -1,0 +1,22 @@
+from django.db import models
+
+class Topic(models.Model):
+    """ユーザが学んでいる最中のトピック"""
+    text = models.CharField(max_length=200)
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.text
+
+
+class Entry(models.Model):
+    """トピックに関して学んだ何かしら具体的なこと"""
+    topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
+    text = models.TextField()
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name_plural = 'entries'
+    
+    def __str__(self):
+        return f"{self.text[:50]}..."
